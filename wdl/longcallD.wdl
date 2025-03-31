@@ -43,9 +43,10 @@ task RunLongcallD {
     command <<<
         set -e
 
-        # Install required tools that might be missing
+        # Install required tools
         apt-get update -y
-        apt-get install -y build-essential gcc make cmake libcurl4-openssl-dev zlib1g-dev libbz2-dev liblzma-dev libssl-dev samtools tabix
+        apt-get install -y build-essential gcc g++ make cmake zlib1g-dev libbz2-dev liblzma-dev libcurl4-openssl-dev \
+             libssl-dev samtools tabix
 
         # Extract the source tarball
         mkdir -p longcallD_source
