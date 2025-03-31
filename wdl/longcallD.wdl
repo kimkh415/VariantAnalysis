@@ -49,7 +49,7 @@ task RunLongcallD {
 
         # Extract the source tarball
         mkdir -p longcallD_source
-        tar -xzf ~{longcallD_source_tarball} -C longcallD_source --strip-components=1
+        tar -xzf ~{longcallD_tarball} -C longcallD_source --strip-components=1
         cd longcallD_source
 
         # Compile longcallD
