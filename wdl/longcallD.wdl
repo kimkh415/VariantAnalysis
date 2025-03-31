@@ -4,7 +4,7 @@ workflow LongcallD_SV_Caller {
     input {
         File ref_fa
         File bam
-        File longcallD_exec
+        File longcallD_tarball
         String sample_name = "sample"
         Int threads = 8
         Int memory_gb = 16
@@ -14,7 +14,7 @@ workflow LongcallD_SV_Caller {
         input:
             ref_fa = ref_fa,
             bam = bam,
-            longcallD_exec = longcallD_exec,
+            longcallD_tarball = longcallD_tarball,
             sample_name = sample_name,
             threads = threads,
             memory_gb = memory_gb
@@ -32,7 +32,7 @@ task RunLongcallD {
     input {
         File ref_fa
         File bam
-        File longcallD_exec
+        File longcallD_tarball
         String sample_name
         Int threads
         Int memory_gb
@@ -45,13 +45,24 @@ task RunLongcallD {
 
         # Install required tools that might be missing
         apt-get update -y
-        apt-get install -y tabix samtools
+        apt-get install -y build-essential gcc make cmake libcurl4-openssl-dev zlib1g-dev libbz2-dev liblzma-dev libssl-dev samtools tabix
 
-        # Make the executable file executable
-        chmod +x ~{longcallD_exec}
+        # Extract the source tarball
+        mkdir -p longcallD_source
+        tar -xzf ~{longcallD_source_tarball} -C longcallD_source --strip-components=1
+        cd longcallD_source
+
+        # Compile longcallD
+        mkdir -p build
+        cd build
+        cmake ..
+        make -j~{threads}
+
+        cd ../../
 
         # Run longcallD with phasing
-        ~{longcallD_exec} call \
+        echo "Starting LongcallD..."
+        ./longcallD_source/build/longcallD call \
             -t ~{threads} \
             ~{ref_fa} \
             ~{bam} \
@@ -72,7 +83,7 @@ task RunLongcallD {
     }
 
     runtime {
-        docker: "staphb/samtools:1.21"
+        docker: "ubuntu:22.04"
         cpu: threads
         memory: memory_gb
         disks: "local-disk ~{disk_size} SSD"
