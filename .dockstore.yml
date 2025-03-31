@@ -1,0 +1,5 @@
+version: 1.2
+workflows:
+- name: LongcallD
+  subclass: wdl
+  primaryDescriptorPath: /wdl/deprecated/ONT10x.wdl
