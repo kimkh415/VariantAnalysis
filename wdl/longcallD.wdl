@@ -50,19 +50,14 @@ task RunLongcallD {
         # Extract the source tarball
         mkdir -p longcallD_source
         tar -xzf ~{longcallD_tarball} -C longcallD_source --strip-components=1
-        cd longcallD_source
+        cd longcallD_source; make
 
-        # Compile longcallD
-        mkdir -p build
-        cd build
-        cmake ..
-        make -j~{threads}
-
-        cd ../../
+        cd ../
+        tree -L 2
 
         # Run longcallD with phasing
         echo "Starting LongcallD..."
-        ./longcallD_source/build/longcallD call \
+        ./longcallD_source/longcallD call \
             -t ~{threads} \
             ~{ref_fa} \
             ~{bam} \
