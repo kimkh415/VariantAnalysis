@@ -72,7 +72,7 @@ task RunLongcallD {
     }
 
     runtime {
-        docker: "taphb/samtools:1.21
+        docker: "staphb/samtools:1.21"
         cpu: threads
         memory: memory_gb
         disks: "local-disk ~{disk_size} SSD"
