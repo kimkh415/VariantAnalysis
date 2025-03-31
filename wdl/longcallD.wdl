@@ -72,7 +72,7 @@ task RunLongcallD {
     }
 
     runtime {
-        docker: "broadinstitute/genomes-in-the-cloud:2.0.0"
+        docker: "taphb/samtools:1.21
         cpu: threads
         memory: memory_gb
         disks: "local-disk ~{disk_size} SSD"
