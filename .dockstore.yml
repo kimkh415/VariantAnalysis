@@ -3,3 +3,6 @@ workflows:
 - name: LongcallD
   subclass: wdl
   primaryDescriptorPath: /wdl/longcallD.wdl
+- name: Kanpig
+  subclass: wdl
+  primaryDescriptorPath: /wdl/run_kanpig.wdl
