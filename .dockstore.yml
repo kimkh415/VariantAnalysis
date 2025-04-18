@@ -6,3 +6,6 @@ workflows:
 - name: Kanpig
   subclass: wdl
   primaryDescriptorPath: /wdl/run_kanpig.wdl
+- name: PhaseSVwithSNP
+  subclass: wdl
+  primaryDescriptorPath: /wdl/PhaseSVwithSNP.wdl
