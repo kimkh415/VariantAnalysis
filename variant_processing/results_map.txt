@@ -1,0 +1,12 @@
+cue2	INS	/stanley/levin_asap_storage/kwanho/Revio_gDNA/variant_calls/merge_SVs/cohort_merged/sv.unique.cue2.INS.vcf.gz
+cue2	DEL	/stanley/levin_asap_storage/kwanho/Revio_gDNA/variant_calls/merge_SVs/cohort_merged/sv.unique.cue2.DEL.vcf.gz
+cue2	DUP	/stanley/levin_asap_storage/kwanho/Revio_gDNA/variant_calls/merge_SVs/cohort_merged/sv.unique.cue2.DUP.vcf.gz
+cue2	INV	/stanley/levin_asap_storage/kwanho/Revio_gDNA/variant_calls/merge_SVs/cohort_merged/sv.unique.cue2.INV.vcf.gz
+sniffles2	INS	/stanley/levin_asap_storage/kwanho/Revio_gDNA/variant_calls/merge_SVs/cohort_merged/sv.unique.sniffles2.INS.vcf.gz
+sniffles2	DEL	/stanley/levin_asap_storage/kwanho/Revio_gDNA/variant_calls/merge_SVs/cohort_merged/sv.unique.sniffles2.DEL.vcf.gz
+sniffles2	DUP	/stanley/levin_asap_storage/kwanho/Revio_gDNA/variant_calls/merge_SVs/cohort_merged/sv.unique.sniffles2.DUP.vcf.gz
+sniffles2	INV	/stanley/levin_asap_storage/kwanho/Revio_gDNA/variant_calls/merge_SVs/cohort_merged/sv.unique.sniffles2.INV.vcf.gz
+pbsv	INS	/stanley/levin_asap_storage/kwanho/Revio_gDNA/variant_calls/merge_SVs/cohort_merged/sv.unique.pbsv.INS.vcf.gz
+pbsv	DEL	/stanley/levin_asap_storage/kwanho/Revio_gDNA/variant_calls/merge_SVs/cohort_merged/sv.unique.pbsv.DEL.vcf.gz
+pbsv	DUP	/stanley/levin_asap_storage/kwanho/Revio_gDNA/variant_calls/merge_SVs/cohort_merged/sv.unique.pbsv.DUP.vcf.gz
+pbsv	INV	/stanley/levin_asap_storage/kwanho/Revio_gDNA/variant_calls/merge_SVs/cohort_merged/sv.unique.pbsv.INV.vcf.gz

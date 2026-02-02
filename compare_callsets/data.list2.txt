@@ -1,0 +1,12 @@
+cue2_sniffles2_INS/tp-base.vcf.gz ../cohort_merged/sv.unique.pbsv.INS.vcf.gz TP_PBSV_INS/
+cue2_sniffles2_INS/fp.vcf.gz ../cohort_merged/sv.unique.pbsv.INS.vcf.gz FP_PBSV_INS/
+cue2_sniffles2_INS/fn.vcf.gz ../cohort_merged/sv.unique.pbsv.INS.vcf.gz FN_PBSV_INS/
+cue2_sniffles2_DEL/tp-base.vcf.gz ../cohort_merged/sv.unique.pbsv.DEL.vcf.gz TP_PBSV_DEL/
+cue2_sniffles2_DEL/fp.vcf.gz ../cohort_merged/sv.unique.pbsv.DEL.vcf.gz FP_PBSV_DEL/
+cue2_sniffles2_DEL/fn.vcf.gz ../cohort_merged/sv.unique.pbsv.DEL.vcf.gz FN_PBSV_DEL/
+cue2_sniffles2_DUP/tp-base.vcf.gz ../cohort_merged/sv.unique.pbsv.DUP.vcf.gz TP_PBSV_DUP/
+cue2_sniffles2_DUP/fp.vcf.gz ../cohort_merged/sv.unique.pbsv.DUP.vcf.gz FP_PBSV_DUP/
+cue2_sniffles2_DUP/fn.vcf.gz ../cohort_merged/sv.unique.pbsv.DUP.vcf.gz FN_PBSV_DUP/
+cue2_sniffles2_INV/tp-base.vcf.gz ../cohort_merged/sv.unique.pbsv.INV.vcf.gz TP_PBSV_INV/
+cue2_sniffles2_INV/fp.vcf.gz ../cohort_merged/sv.unique.pbsv.INV.vcf.gz FP_PBSV_INV/
+cue2_sniffles2_INV/fn.vcf.gz ../cohort_merged/sv.unique.pbsv.INV.vcf.gz FN_PBSV_INV/

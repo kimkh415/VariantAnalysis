@@ -1,0 +1,4 @@
+../cohort_merged/sv.unique.cue2.DEL.vcf.gz ../cohort_merged/sv.unique.sniffles2.DEL.vcf.gz cue2_sniffles2_DEL/
+../cohort_merged/sv.unique.cue2.INV.vcf.gz ../cohort_merged/sv.unique.sniffles2.INV.vcf.gz cue2_sniffles2_INV/
+../cohort_merged/sv.unique.cue2.DUP.vcf.gz ../cohort_merged/sv.unique.sniffles2.DUP.vcf.gz cue2_sniffles2_DUP/
+cue2_sniffles2_DUP/fn.vcf.gz ../cohort_merged/sv.unique.sniffles2.INS.vcf.gz cue2_sniffles2_INS/
