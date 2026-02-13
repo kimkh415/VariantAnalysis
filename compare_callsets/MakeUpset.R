@@ -28,7 +28,7 @@ plot_upset_sv <- function(df,
     uncount(Count) %>%
     mutate(
       # Cue2
-      `Cue2 INS`      = FALSE, # Must exist for the plot to work, even if empty
+      #`Cue2 INS`      = FALSE, # Must exist for the plot to work, even if empty
       `Cue2 DUP`      = str_detect(Caller_set, "DUP_C\\b"),
       `Cue2 DEL`      = str_detect(Caller_set, "DEL_C\\b"),
       `Cue2 INV`      = str_detect(Caller_set, "INV_C\\b"),
@@ -49,9 +49,9 @@ plot_upset_sv <- function(df,
   pdf(file.path(outdir, paste0(nam, ".pdf")), width = 15, height = 7)
   p <- upset(
     upset_df,
-    intersect = sets_ordered,
-    min_size = 0,
-    #sort_sets = FALSE,
+    intersect = sets_ordered, # Uses the expanded column names here
+    min_size = 0,             # Keeps 'Cue2 INS' visible even if count is 0
+    #sort_sets = FALSE,        # Respects your custom order
     sort_intersections_by = c('degree', 'cardinality'),
     width_ratio = 0.2,
     base_annotations = list(
@@ -65,7 +65,7 @@ plot_upset_sv <- function(df,
     ),
     # Assign colors to rows
     queries = list(
-      upset_query(set="Cue2 INS",      fill=sv_type_colors['INS']),
+      #upset_query(set="Cue2 INS",      fill=sv_type_colors['INS']),
       upset_query(set="PBSV INS",      fill=sv_type_colors['INS']),
       upset_query(set="Sniffles2 INS", fill=sv_type_colors['INS']),
       upset_query(set="Cue2 DEL",      fill=sv_type_colors['DEL']),
@@ -94,5 +94,7 @@ plot_upset_sv <- function(df,
 input_file="upset_data_final.tsv"
 outdir="New_Fig2a/"
 df <- read_tsv(input_file, show_col_types = FALSE)
-plot_upset_sv(df, outdir, "Fig2a_final", sets_ordered, names(sv_type_colors), sv_type_colors)
+
+sets_ordered = setdiff(sets_ordered, "Cue2 INS")
+plot_upset_sv(df, outdir, "Fig2a_20260213", sets_ordered, names(sv_type_colors), sv_type_colors)
 

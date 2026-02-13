@@ -24,7 +24,7 @@ SEEDFILE=data.list.txt ##File with parameters
 base_vcf=$(awk "NR==$SGE_TASK_ID" $SEEDFILE | awk '{print $1}')
 comp_vcf=$(awk "NR==$SGE_TASK_ID" $SEEDFILE | awk '{print $2}')
 outdir=$(awk "NR==$SGE_TASK_ID" $SEEDFILE | awk '{print $3}')
-outfile=$(awk "NR==$SGE_TASK_ID" $SEEDFILE | awk '{print $3}')
+outfile=$(awk "NR==$SGE_TASK_ID" $SEEDFILE | awk '{print $4}')
 
 truvari bench \
 	-b $base_vcf \
@@ -35,7 +35,8 @@ truvari bench \
 	--refdist 500 \
 	--sizemax 100000000 \
 	--sizemin 50 \
-	--sizefilt 30
+	--sizefilt 30 \
+	--pick multi
 
 truvari vcf2df --info --bench-dir $outdir $outfile
 

@@ -1,3 +1,3 @@
-../cohort_merged/sv.unique.cue2.noXY.vcf.gz ../cohort_merged/sv.unique.sniffles2.vcf.gz cue2_sniffles2/ result_cs.jl
-../cohort_merged/sv.unique.cue2.noXY.vcf.gz ../cohort_merged/sv.unique.pbsv.vcf.gz cue2_pbsv/ result_cp.jl
+../cohort_merged/truvari.unique.cue2.vcf.gz ../cohort_merged/truvari.unique.sniffles2.vcf.gz cue2_sniffles2/ result_cs.jl
+../cohort_merged/truvari.unique.cue2.vcf.gz ../cohort_merged/truvari.unique.pbsv.vcf.gz cue2_pbsv/ result_cp.jl
 cue2_sniffles2/fp.vcf.gz cue2_pbsv/fp.vcf.gz sniffles2_pbsv/ result_sp.jl
