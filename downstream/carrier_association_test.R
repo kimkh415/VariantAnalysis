@@ -1,4 +1,4 @@
-# SV carrier status vs diagnosis: three Fisher contrasts per significant SV (3-way HC/ILBD/PD, PD vs rest, disease vs HC) from genotypes + phenotype, plus a covariate-confounding check; writes carrier_by_diagnosis.tsv.
+# SV carrier-status association tests (Table S9): per significant SV, (1) three Fisher contrasts of carrier status vs diagnosis (3-way HC/ILBD/PD, PD vs rest, disease vs HC) and (2) a confounding check of carrier status vs donor/QC metadata (age, sex, PMI, RIN, genotype PCs, sequencing batch; Wilcoxon/Fisher, BH-FDR). Writes carrier_by_diagnosis.tsv and carrier_associations.tsv.
 library(data.table)
 
 ROOT <- Sys.getenv("SV_ROOT", "/stanley/levin_asap_storage")
@@ -53,21 +53,31 @@ cat(sprintf("rare (<=10 carriers): n=%d | PD-vs-rest nominal<0.05=%d (min %.3f) 
 cat("RILPL2 (chr12_123453161_INS_3316): PD-vs-rest p=", round(out[SV_id=="chr12_123453161_INS_3316"]$fisher_p_PDvsRest,3),
     " disease-vs-HC p=", round(out[SV_id=="chr12_123453161_INS_3316"]$fisher_p_diseaseVsHC,3), "\n")
 
-## ---- covariate confounding check (age, sex, rin, pmi, PC1-6) : carrier_associations.tsv ----
-# Donor-level covariates (repeated across cells) unioned from the per-cell-type phenofiles;
-# genotype PCs from the MatrixEQTL PC file. Wilcoxon for continuous, Fisher for sex, and the
-# 3-way diagnosis Fisher (reused from `res`). This replaces a lost generator whose output was
-# sample-misaligned (validated: RILPL2 carriers are 3 HC/2 ILBD/2 PD per the VCF, not 0/1/6).
+## ---- carrier-status confounding check vs donor/QC metadata : carrier_associations.tsv ----
+# Carrier status vs age, sex, PMI, RIN, genotype PCs, and sequencing batch. Donor-level covariates
+# are unioned from the per-cell-type phenofiles; genotype PCs from the MatrixEQTL PC file.
+# Continuous -> Wilcoxon; categorical -> Fisher (simulated for multi-level batch, as in the former
 phe_dir <- file.path(W, "saige_percelltype")
 pf  <- list.files(phe_dir, pattern="^phenofile_.*\\.tsv$", full.names=TRUE)
-cov <- unique(rbindlist(lapply(pf, function(f) unique(fread(f, select=c("Donor_ID","age","sex","rin","pmi"))))))
+donor_cols <- c("Donor_ID","age","sex","rin","pmi","batch")            # 'batch' = sequencing batch
+cov <- unique(rbindlist(lapply(pf, function(f)
+  unique(fread(f, select=intersect(donor_cols, names(fread(f, nrows=0)))))), fill=TRUE))
 setnames(cov, "Donor_ID", "sample_id")
+# sequencing batch: taken from the phenofiles if present, else from META_FILE (the
+# cohort_metadata.tsv used by the former carrier_association_metadata_test.R).
+if (!"batch" %in% names(cov)) {
+  mf <- Sys.getenv("META_FILE", file.path(W, "cohort_metadata.tsv"))
+  if (file.exists(mf)) {
+    bt <- fread(mf); setnames(bt, 1, "sample_id")
+    if ("batch" %in% names(bt)) cov <- merge(cov, unique(bt[, .(sample_id, batch)]), by="sample_id", all.x=TRUE)
+  }
+}
 pcs0 <- fread(file.path(FF, "MatrixEQTL/genomic_pcs_1-6.tsv"))          # id + donor cols; rows PC1..PC6
 pcm  <- t(as.matrix(pcs0[, -1, with=FALSE])); colnames(pcm) <- pcs0$id
 pcdt <- data.table(sample_id=rownames(pcm), as.data.table(pcm))
 meta <- merge(cov, pcdt, by="sample_id")
 num_vars <- c("age","pmi","rin", grep("^PC", names(meta), value=TRUE))
-cat_vars <- c("sex")
+cat_vars <- intersect(c("sex","batch"), names(meta))                   # batch tested when available
 metav <- meta[match(samp, meta$sample_id)]                             # align to genotype sample order
 
 crows <- list()
@@ -76,7 +86,10 @@ for (sv in prev$SV_id) {
   for (v in c(num_vars, cat_vars)) {
     val <- metav[[v]]; ok <- !is.na(val) & !is.na(carr)
     if (sum(ok) < 5 || length(unique(carr[ok])) < 2) { p <- NA_real_; tst <- NA_character_
-    } else if (v %in% cat_vars) { p <- fisher.test(table(carr[ok], val[ok]))$p.value; tst <- "fisher"
+    } else if (v %in% cat_vars) {
+      sim <- length(unique(val[ok])) > 2                               # multi-level (batch) -> simulate, as before
+      p <- fisher.test(table(carr[ok], val[ok]), simulate.p.value=sim, B=1e5)$p.value
+      tst <- if (sim) "fisher_sim" else "fisher"
     } else { p <- wilcox.test(val[ok] ~ carr[ok])$p.value; tst <- "wilcoxon" }
     crows[[length(crows)+1]] <- data.table(SV_id=sv, variable=v, test=tst, p=p, n_carriers=sum(carr))
   }
