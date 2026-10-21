@@ -1,0 +1,10 @@
+{
+  "title": "Integrating Long-Read Structural Variant Analysis with single-nucleus RNA-seq to Elucidate Gene Expression Effects in Disease",
+  "upload_type": "software",
+  "creators": [
+    { "name": "Kim, Kwanho" }
+  ],
+  "license": "MIT",
+  "version": "1.1.0",
+  "description": "Computational workflows, custom scripts, and analysis code used in the manuscript \"Integrating Long-Read Structural Variant Analysis with single-nucleus RNA-seq to Elucidate Gene Expression Effects in Disease\" (Kim et al.)."
+}
